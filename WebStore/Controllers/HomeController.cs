@@ -41,5 +41,18 @@ namespace WebStore.Controllers
         {
             return View(_employees);
         }
+
+        public IActionResult EmployeeDetails(int id)
+        {
+            //Получаем сотрудника по Id
+            var employee = _employees.FirstOrDefault(t => t.id.Equals(id));
+
+            //Если такого не существует
+            if (employee == null)
+                return NotFound();// Возвращаем результат 404 Not Found
+
+            //Иначе возвращаем сотрудника
+            return View(_employees.FirstOrDefault(x => x.id == id));
+        }
     }
 }
