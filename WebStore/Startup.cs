@@ -44,7 +44,7 @@ namespace WebStore
                 //endpoints.MapDefaultControllerRoute(); // краткий аналог
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=MyHome}/{action=Steels}/{id?}");
                 // https://localhost:44317/    home            /index
                 // https://localhost:44317/
                 // ћаршрут по умолчанию состоит из трЄх частей разделЄнных У/Ф
@@ -56,10 +56,10 @@ namespace WebStore
                 // дл€ действи€ - УIndexФ
 
 
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync(helloString);
-                });
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync(helloString);
+                //});
             });
         }
     }

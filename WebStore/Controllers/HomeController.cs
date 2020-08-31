@@ -33,6 +33,24 @@ namespace WebStore.Controllers
             }
         };
 
+        private readonly List<SteelViewModel> _steels = new List<SteelViewModel>
+        {
+            new SteelViewModel
+            {
+                id = 1,
+                Name = "Сталь 05кп",
+                GOSTName = "ГОСТ 1050-74",
+                Description = "Описание1"
+            },
+            new SteelViewModel
+            {
+                id = 2,
+                Name = "Ст0",
+                GOSTName = "ГОСТ 380-71",
+                Description = "Описание2"
+            }
+        };
+
         public IActionResult Index()
         {
             //return Content("Hello from controller");
@@ -56,5 +74,6 @@ namespace WebStore.Controllers
             //Иначе возвращаем сотрудника
             return View(_employees.FirstOrDefault(x => x.id == id));
         }
+        
     }
 }

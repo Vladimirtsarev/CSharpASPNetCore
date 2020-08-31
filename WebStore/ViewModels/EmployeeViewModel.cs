@@ -1,5 +1,4 @@
-﻿
-namespace WebStore.ViewModels
+﻿namespace WebStore.ViewModels
 {
     public class EmployeeViewModel
     {

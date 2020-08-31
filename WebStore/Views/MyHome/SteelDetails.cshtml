@@ -1,0 +1,29 @@
+﻿@model WebStore.ViewModels.SteelViewModel
+
+@{
+    ViewData["Title"] = "Детали";
+}
+
+<table class="table table-bordered" border="1" width="400">
+    <tr>
+        <td>Id</td>
+        <td>@Model.id</td>
+    </tr>
+    <tr>
+        <td>Название</td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>ГОСТ</td>
+        <td>@Model.GOSTName</td>
+    </tr>
+    <tr>
+        <td>Описание</td>
+        <td>@Model.Description</td>
+    </tr>
+</table>
+    
+       
+    <div>
+        @Html.ActionLink("Назад к списку", "Steels") 
+    </div>
