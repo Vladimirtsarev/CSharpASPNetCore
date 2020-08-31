@@ -1,0 +1,15 @@
+﻿@model IEnumerable<EmployeeViewModel>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.FirstName</td>
+            <td>@item.SurName</td>
+            <td>@item.Patronymic</td>
+            <td>
+                @Html.ActionLink("Детали", "EmployeeDetails", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
