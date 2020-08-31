@@ -105,12 +105,12 @@
                             <li class="dropdown">
                                 <a asp-controller="Home" asp-action="Blog" >Blog<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
+                                    <li><a asp-controller="Home" asp-action="blog">Blog List</a></li>
+                                    <li><a asp-controller="Home" asp-action="blogSingle">Blog Single</a></li>
                                 </ul>
                             </li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="contact-us.html">Contact</a></li>
+                            <li><a asp-controller="Home" asp-action="notFound">404</a></li>
+                            <li><a asp-controller="Home" asp-action="contactUs">Contact</a></li>
                         </ul>
                     </div>
                 </div>
