@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebStore.ViewModels.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h1>Сотрудники</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurName)
+            </th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurName)
+            </td>
+                    
+        </tr>
+}
+    </tbody>
+</table>
