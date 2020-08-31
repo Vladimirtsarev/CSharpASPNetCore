@@ -7,8 +7,9 @@
         <td>@item.FirstName</td>
         <td>@item.SurName</td>
         <td>@item.Patronymic</td>
+        <td>@item.Age</td>
         <td>
-            @Html.ActionLink("Детали", "EmployeeDetails", new { id = item.id})
+            @Html.ActionLink("Детали", "EmployeeDetails", new { id = item.id })
         </td>
     </tr>
     }

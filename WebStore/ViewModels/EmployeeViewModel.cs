@@ -13,6 +13,8 @@ namespace WebStore.ViewModels
 
         public int Age { get; set; }
 
+        public string BirthDay { get; set; }
+
         public string Position { get; set; }
             
 
