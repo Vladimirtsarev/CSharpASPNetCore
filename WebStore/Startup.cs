@@ -1,8 +1,12 @@
-using Microsoft.AspNetCore.Builder;
+Ôªøusing Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStore.Infrastructure;
+using WebStore.Infrastructure.Services;
+using WebStore.Interfaces.Infrastructure;
 
 namespace WebStore
 {
@@ -19,7 +23,18 @@ namespace WebStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                //options.Filters.Add(typeof(SimpleActionFilter)); // –ø–æ–¥–∫–ª—é—á–µ–Ω–∏–µ –ø–æ —Ç–∏–ø—É
+
+                // –∞–ª—å—Ç–µ—Ä–Ω–∞—Ç–∏–≤–Ω—ã–π –≤–∞—Ä–∏–∞–Ω—Ç –ø–æ–¥–∫–ª—é—á–µ–Ω–∏—è
+                options.Filters.Add(new SimpleActionFilter()); // –ø–æ–¥–∫–ª—é—á–µ–Ω–∏–µ –ø–æ –æ–±—ä–µ–∫—Ç—É
+            });
+
+            // –î–æ–±–∞–≤–ª—è–µ–º —Ä–∞–∑—Ä–µ—à–µ–Ω–∏–µ –∑–∞–≤–∏—Å–∏–º–æ—Å—Ç–∏
+            services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
+            //services.AddScoped<IEmployeesService, InMemoryEmployeesService>();
+            //services.AddTransient<IEmployeesService, InMemoryEmployeesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,31 +47,34 @@ namespace WebStore
 
             app.UseStaticFiles();
 
+            var helloString = _configuration["CustomHelloWorld"];
+            //var helloString = _configuration["Logging:LogLevel:Default"];
+
+            app.UseWelcomePage("/welcome");
+
+            app.UseMiddleware<TokenMiddleware>();
+
+            UseMiddlewareSample(app);
+
+            app.Map("/index", CustomIndexHandler);
+
             app.UseRouting();
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapGet("/", async context =>
-            //    {
-            //        await context.Response.WriteAsync("Hello World!");
-            //    });
-            //});
-            
             app.UseEndpoints(endpoints =>
             {
-                // endpoints.MapDefaultControllerRoute(); // Í‡ÚÍËÈ ‡Ì‡ÎÓ„
+                // endpoints.MapDefaultControllerRoute(); // –∫—Ä–∞—Ç–∫–∏–π –∞–Ω–∞–ª–æ–≥
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                // https://localhost:44317/    home            /index
-                // https://localhost:44317/
-                // Ã‡¯ÛÚ ÔÓ ÛÏÓÎ˜‡ÌË˛ ÒÓÒÚÓËÚ ËÁ Ú∏ı ˜‡ÒÚÂÈ ‡Á‰ÂÎ∏ÌÌ˚ı ì/î
-                // œÂ‚ÓÈ ˜‡ÒÚ¸˛ ÛÍ‡Á˚‚‡ÂÚÒˇ ËÏˇ ÍÓÌÚÓÎÎÂ‡,
-                // ‚ÚÓÓÈ - ËÏˇ ‰ÂÈÒÚ‚Ëˇ (ÏÂÚÓ‰‡) ‚ ÍÓÌÚÓÎÎÂÂ,
-                // ÚÂÚÂÈ - ÓÔˆËÓÌ‡Î¸Ì˚È Ô‡‡ÏÂÚ Ò ËÏÂÌÂÏ ìidî
-                // ≈ÒÎË ˜‡ÒÚ¸ ÌÂ ÛÍ‡Á‡Ì‡ - ËÒÔÓÎ¸ÁÛ˛ÚÒˇ ÁÌ‡˜ÂÌËˇ ÔÓ ÛÏÓÎ˜‡ÌË˛:
-                // ‰Îˇ ÍÓÌÚÓÎÎÂ‡ ËÏˇ ìHomeî,
-                // ‰Îˇ ‰ÂÈÒÚ‚Ëˇ - ìIndexî
+// https://localhost:44317/    home            /index
+// https://localhost:44317/
+                // –ú–∞—Ä—à—Ä—É—Ç –ø–æ —É–º–æ–ª—á–∞–Ω–∏—é —Å–æ—Å—Ç–æ–∏—Ç –∏–∑ —Ç—Ä—ë—Ö —á–∞—Å—Ç–µ–π —Ä–∞–∑–¥–µ–ª—ë–Ω–Ω—ã—Ö ‚Äú/‚Äù
+                // –ü–µ—Ä–≤–æ–π —á–∞—Å—Ç—å—é —É–∫–∞–∑—ã–≤–∞–µ—Ç—Å—è –∏–º—è –∫–æ–Ω—Ç—Ä–æ–ª–ª–µ—Ä–∞,
+                // –≤—Ç–æ—Ä–æ–π - –∏–º—è –¥–µ–π—Å—Ç–≤–∏—è (–º–µ—Ç–æ–¥–∞) –≤ –∫–æ–Ω—Ç—Ä–æ–ª–ª–µ—Ä–µ,
+                // —Ç—Ä–µ—Ç–µ–π - –æ–ø—Ü–∏–æ–Ω–∞–ª—å–Ω—ã–π –ø–∞—Ä–∞–º–µ—Ç—Ä —Å –∏–º–µ–Ω–µ–º ‚Äúid‚Äù
+                // –ï—Å–ª–∏ —á–∞—Å—Ç—å –Ω–µ —É–∫–∞–∑–∞–Ω–∞ - –∏—Å–ø–æ–ª—å–∑—É—é—Ç—Å—è –∑–Ω–∞—á–µ–Ω–∏—è –ø–æ —É–º–æ–ª—á–∞–Ω–∏—é:
+                // –¥–ª—è –∫–æ–Ω—Ç—Ä–æ–ª–ª–µ—Ä–∞ –∏–º—è ‚ÄúHome‚Äù,
+                // –¥–ª—è –¥–µ–π—Å—Ç–≤–∏—è - ‚ÄúIndex‚Äù
 
 
                 //endpoints.MapGet("/", async context =>
@@ -64,6 +82,38 @@ namespace WebStore
                 //    await context.Response.WriteAsync(helloString);
                 //});
             });
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("No handler found for this request...");
+            });
         }
+
+        private void CustomIndexHandler(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("response to /Index URL...");
+            });
+        }
+
+        private void UseMiddlewareSample(IApplicationBuilder app)
+        {
+            app.Use(async (context, next) =>
+            {
+                bool isError = false;
+                // ...
+                if (isError)
+                {
+                    await context.Response
+                        .WriteAsync("Error occured. You're in custom pipeline module...");
+                }
+                else
+                {
+                    await next.Invoke();
+                }
+            });
+        }
+
     }
 }
