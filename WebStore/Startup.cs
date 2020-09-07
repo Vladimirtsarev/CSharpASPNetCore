@@ -33,6 +33,7 @@ namespace WebStore
 
             // Добавляем разрешение зависимости
             services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
+            // Добавляем разрешение зависимости
             services.AddSingleton<ISteelsService, InMemorySteelsService>();
             //services.AddScoped<IEmployeesService, InMemoryEmployeesService>();
             //services.AddTransient<IEmployeesService, InMemoryEmployeesService>();
