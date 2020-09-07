@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WebStore.ViewModels.SteelViewModel>
+
+@{
+    ViewData["Title"] = "Стали";
+}
+
+<a asp-action="Edit" class="btn btn-success">Добавить</a>
+<table class="table" border="1" width="600">
+    <thead>
+        <tr>
+            <th><i class="fa fa-edit"></i></th>
+            <th><i class="fa fa-eraser"></i></th>
+            <th>ID</th>
+            <th>Название</th>
+            <th>ГОСТ</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td width="30"><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
+            <td width="30"><a asp-action="Delite" asp-route-id="@item.Id"><i class="fa fa-eraser"></i></a></td>
+            <td width="30">@Html.ActionLink(@item.Id.ToString(), "SteelDetails", new { id = item.Id })</td>
+            <td>@Html.ActionLink(@item.Name.ToString(), "SteelDetails", new { id = item.Id })</td>
+            <td>@item.GOSTName</td>            
+        </tr>
+}
+    </tbody>
+</table>
