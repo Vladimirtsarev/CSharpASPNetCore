@@ -17,6 +17,8 @@ namespace WebStore.Domain.Entities
         public decimal Price { get; set; }
         public string Manufacturer { get; set; }
 
+        public int Sale { get; set; } //Добавляем миграцией
+
         [ForeignKey("CategoryId")] // не обязательно в целом
         public virtual Category Category { get; set; }
 
