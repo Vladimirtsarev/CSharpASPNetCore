@@ -42,7 +42,7 @@ namespace WebStore
             // Добавляем разрешение зависимости
             services.AddSingleton<ISteelsService, InMemorySteelsService>();
             // Добавляем разрешение зависимости
-            services.AddSingleton<IProductService, InMemoryProductService>();
+            services.AddScoped<IProductService, SqlProductService>();
             //services.AddScoped<IEmployeesService, InMemoryEmployeesService>();
             //services.AddTransient<IEmployeesService, InMemoryEmployeesService>();
         }
