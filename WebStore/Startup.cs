@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,6 +32,9 @@ namespace WebStore
                 // альтернативный вариант подключения
                 options.Filters.Add(new SimpleActionFilter()); // подключение по объекту
             });
+
+            services.AddDbContext<DbContext>(options => options.
+            UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             // Добавляем разрешение зависимости
             services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
