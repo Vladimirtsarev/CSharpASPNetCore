@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStore.DAL;
 using WebStore.Infrastructure;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Services;
@@ -33,8 +34,8 @@ namespace WebStore
                 options.Filters.Add(new SimpleActionFilter()); // подключение по объекту
             });
 
-            services.AddDbContext<DbContext>(options => options.
-            UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<WebStoreContext>(options => options
+                .UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             // Добавляем разрешение зависимости
             services.AddSingleton<IEmployeesService, InMemoryEmployeesService>();
