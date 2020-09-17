@@ -1,19 +1,29 @@
 ﻿@model IEnumerable<EmployeeViewModel>
 
-<a asp-action="Edit" class="btn btn-success">Добавить</a>
+@{
+    var isAdmin = User.IsInRole("Admins");
+}
 
+@if (isAdmin)
+{
+    <a asp-action="Edit" class="btn btn-success">Добавить</a>
+}
 <table class="table">
     @foreach (var item in Model)
     {
-    <tr>
-        <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
-        <td><a asp-action="Delite" asp-route-id="@item.Id"><i class="fa fa-eraser"></i></a></td>
-        <td>@item.FirstName</td>
-        <td>@item.SurName</td>
-        <td>@item.Patronymic</td>
-        <td>
-            @Html.ActionLink("Детали", "EmployeeDetails", new { id = item.Id })
-        </td>
-    </tr>
+        <tr>
+            @if (isAdmin)
+            {
+                <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
+                <td><a asp-action="Delite" asp-route-id="@item.Id"><i class="fa fa-eraser"></i></a></td>
+            }
+            <td>@item.FirstName</td>
+            <td>@item.SurName</td>
+            <td>@item.Patronymic</td>
+            <td>
+                <a asp-action="EmployeeDetails" asp-route-id="@item.Id">Детали тегхлп</a>
+                @Html.ActionLink("Детали", "EmployeeDetails", new { id = item.Id })
+            </td>
+        </tr>
     }
 </table>
