@@ -82,6 +82,10 @@ namespace WebStore
                 options.SlidingExpiration = true;
             });
 
+            // Настройки для корзины
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICartService, CookieCartService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

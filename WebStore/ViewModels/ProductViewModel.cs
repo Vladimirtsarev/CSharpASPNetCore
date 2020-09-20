@@ -13,5 +13,6 @@ namespace WebStore.ViewModels
         public int Order { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
+        public string BrandName { get; internal set; }
     }
 }
