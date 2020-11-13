@@ -86,6 +86,8 @@ namespace WebStore
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICartService, CookieCartService>();
 
+            services.AddScoped<IOrdersService, SqlOrdersService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,6 +120,12 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
+                // endpoints.MapDefaultControllerRoute(); // краткий аналог
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    //pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                pattern: "{area:exists}/{controller=Products}/{action=index}/{id?}");
+
                 // endpoints.MapDefaultControllerRoute(); // краткий аналог
                 endpoints.MapControllerRoute(
                     name: "default",
