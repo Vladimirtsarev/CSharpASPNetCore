@@ -16,7 +16,10 @@
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
+<<<<<<< HEAD
 # [Rr]elease/
+=======
+>>>>>>> 8992b24ba60bed56c911cf12d1eb1d4aa2a4ca2e
 [Rr]eleases/
 x64/
 x86/
